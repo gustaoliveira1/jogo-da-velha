@@ -1,19 +1,39 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import Head from "next/head"
 import Box from "../components/Box"
 
+
 export default function Home() {
-  const [moves, setMoves] = useState([null, null, null, null, null, null, null, null, null])
+  const voidGame = [null, null, null, null, null, null, null, null, null]
+
+  const [moves, setMoves] = useState(voidGame)
+  const [winner, setWinner] = useState(null)
   const [currentPlayer, setCurrentPlayer] = useState(1)
+  const [displayWinnerScreen, setDisplayWinnerScreen] = useState(false)
+  const [displayDrawScreen, setDisplayDrawScreen] = useState(false)
+
+  useEffect(() => {
+    const isWinner = checkWinner(moves)
+    const draw = checkDraw(moves)
+
+    if (isWinner   !== false) {
+      setDisplayWinnerScreen(true)
+      setWinner(isWinner)
+    } 
+    else if (draw === true) {
+      setDisplayDrawScreen(true)
+    }
+  }, [moves])
 
   const handleClick = (index) => {
     if (moves[index] === null) {
-      let moveList = [...moves]
-      moveList[index] = currentPlayer
-      setMoves(moveList)
-  
-      setCurrentPlayer(currentPlayer == 1 ? 2 : 1)
+
+      const movesList = [...moves]
+      movesList[index] = currentPlayer  
+
+      setMoves(movesList)
+      setCurrentPlayer(currentPlayer === 1 ? 2 : 1)
     }
   }
 
@@ -42,10 +62,15 @@ export default function Home() {
     return false
   }
 
-  const noAvaliableMoves = (moves) => {
-    return moves.every((move) => {
-      return move !== null 
-    })
+  const checkDraw = (moves) => {
+    return moves.every(move => move !== null)
+  }
+
+  const createNewGame = () => {
+    setDisplayWinnerScreen(false)
+    setDisplayDrawScreen(false)
+    setMoves(voidGame)
+    setCurrentPlayer(1)
   }
 
   return (
@@ -53,13 +78,39 @@ export default function Home() {
       <Head>
         <title>Jogo da velha</title>
       </Head>
-
-      <main className="h-screen bg-zinc-900 flex justify-center items-center p-6">
+      <main className="h-screen bg-zinc-900 flex flex-col justify-center items-center p-6">
+        
         <div className="text-white flex grid grid-cols-3 gap-4 w-full max-w-md h-full max-h-96 text-3xl">
-            
+        
           {moves.map((move, index) => {
             return <Box key={index} boxValue={move} onClick={() => handleClick(index)}/>
           })}
+
+        </div>
+        <button
+          className="bg-purple-700 active:bg-purple-800 px-6 py-2 rounded-md mt-6"
+          onClick={createNewGame}>
+          Recomeçar jogo
+        </button>
+      
+        <div className={`${displayWinnerScreen || displayDrawScreen ? "block" : "hidden"} absolute h-full w-full flex justify-center items-center bg-zinc-700/60`}>
+          <div className="bg-zinc-900 p-10 text-center rounded-md">
+            <div className={`${displayWinnerScreen ? "block" : "hidden"}`}>
+              <h1 className="font-bold text-2xl">
+                Vitória do <span className="text-purple-700">jogador {winner}</span>
+              </h1>
+            </div>
+            <div className={`${displayDrawScreen ? "block" : "hidden"}`}>
+              <h1 className="font-bold text-2xl">
+                Deu <span className="text-purple-700">velha!</span>
+              </h1>
+            </div>
+            <button 
+              className="text-sm mt-4 bg-purple-700 active:bg-purple-800 px-4 py-1 rounded-md"
+              onClick={createNewGame}>
+              Começar outra partida
+            </button>
+          </div>
 
         </div>
       </main>
