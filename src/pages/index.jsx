@@ -88,7 +88,7 @@ export default function Home() {
 
         </div>
         <button
-          className="bg-purple-700 active:bg-purple-800 px-6 py-2 rounded-md mt-6"
+          className="text-white bg-purple-700 active:bg-purple-800 px-6 py-2 rounded-md mt-6"
           onClick={createNewGame}>
           Recomeçar jogo
         </button>
@@ -96,17 +96,17 @@ export default function Home() {
         <div className={`${displayWinnerScreen || displayDrawScreen ? "block" : "hidden"} absolute h-full w-full flex justify-center items-center bg-zinc-700/60`}>
           <div className="bg-zinc-900 p-10 text-center rounded-md">
             <div className={`${displayWinnerScreen ? "block" : "hidden"}`}>
-              <h1 className="font-bold text-2xl">
+              <h1 className="font-bold text-white text-2xl">
                 Vitória do <span className="text-purple-700">jogador {winner}</span>
               </h1>
             </div>
             <div className={`${displayDrawScreen ? "block" : "hidden"}`}>
-              <h1 className="font-bold text-2xl">
+              <h1 className="font-bold text-white text-2xl">
                 Deu <span className="text-purple-700">velha!</span>
               </h1>
             </div>
             <button 
-              className="text-sm mt-4 bg-purple-700 active:bg-purple-800 px-4 py-1 rounded-md"
+              className="text-white text-sm mt-4 bg-purple-700 active:bg-purple-800 px-4 py-1 rounded-md"
               onClick={createNewGame}>
               Começar outra partida
             </button>
