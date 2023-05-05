@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
 
 import Head from "next/head"
 import Box from "../components/Box"
@@ -17,7 +18,7 @@ export default function Home() {
     const isWinner = checkWinner(moves)
     const draw = checkDraw(moves)
 
-    if (isWinner   !== false) {
+    if (isWinner !== false) {
       setDisplayWinnerScreen(true)
       setWinner(isWinner)
     } 
@@ -78,8 +79,7 @@ export default function Home() {
       <Head>
         <title>Jogo da velha</title>
       </Head>
-      <main className="h-screen bg-zinc-900 flex flex-col justify-center items-center p-6">
-        
+      <main className="relative h-screen bg-zinc-900 flex flex-col justify-center items-center p-6">
         <div className="text-white flex grid grid-cols-3 gap-4 w-full max-w-md h-full max-h-96 text-3xl">
         
           {moves.map((move, index) => {
@@ -93,8 +93,18 @@ export default function Home() {
           Recomeçar jogo
         </button>
 
-        <div className={`${displayWinnerScreen || displayDrawScreen ? "block" : "hidden"} absolute h-full w-full flex justify-center items-center bg-zinc-700/60`}>
-          <div className="bg-zinc-900 p-10 text-center rounded-md">
+        { (displayDrawScreen || displayWinnerScreen) && <motion.div
+          className="absolute h-full w-full flex justify-center items-center bg-zinc-700/60"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          { (displayDrawScreen || displayWinnerScreen) && <motion.div 
+          className="bg-zinc-900 p-10 text-center rounded-md"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type:"spring", stiffness: 150, duration: 0.5 }}
+          >
             <div className={`${displayWinnerScreen ? "block" : "hidden"}`}>
               <h1 className="font-bold text-white text-2xl">
                 Vitória do <span className="text-purple-700">jogador {winner}</span>
@@ -110,8 +120,10 @@ export default function Home() {
               onClick={createNewGame}>
               Começar outra partida
             </button>
-          </div>
-        </div>
+          </motion.div>}
+
+        </motion.div>}
+
       </main>
     </div>
   )
