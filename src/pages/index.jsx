@@ -88,7 +88,7 @@ export default function Home() {
 
         </div>
         <button
-          className="text-white bg-purple-700 active:bg-purple-800 px-6 py-2 rounded-md mt-6"
+          className="text-white bg-purple-700 active:bg-purple-800 px-6 py-2 rounded-md mt-6 cursor-pointer"
           onClick={createNewGame}>
           Recomeçar jogo
         </button>
@@ -116,7 +116,7 @@ export default function Home() {
               </h1>
             </div>
             <button
-              className="text-white text-sm mt-4 bg-purple-700 active:bg-purple-800 px-4 py-1 rounded-md"
+              className="text-white text-sm mt-4 bg-purple-700 active:bg-purple-800 px-4 py-1 rounded-md cursor-pointer"
               onClick={createNewGame}>
               Começar outra partida
             </button>

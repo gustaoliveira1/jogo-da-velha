@@ -2,11 +2,14 @@
 
 A simple tic-tac-toe game, to train my knowledge and familiarize myself with Nextjs
 
+## [Live project](https://jogo-da-velha-gustaoliveira.vercel.app/)
+
 ## Features
 
 - [Next.js](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/docs/)
 - [React Icons](https://react-icons.github.io/react-icons/)
+- [Framer Motion](https://www.framer.com/motion/)
 
 
 ## Getting Started
